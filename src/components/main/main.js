@@ -1,32 +1,29 @@
 import React, {useEffect, useState} from 'react';
+import CountryCode from './countryCodeAndPrice';
 
 const key = '5d81add0a471e102de1f7222c75929dc'
 const endpoint = ['latest', 'symbols'];
 
-const calculation = ({rates, success}, from, to, amount) => {
-    if(success){
-        let fromAmount, toAmount;
+//http://data.fixer.io/api/latest?access_key=5d81add0a471e102de1f7222c75929dc&format=1
 
-        Object.entries(rates).map((key, value) => {
-            
-            let name = key[0];
-            let price = key[1];
+function calculation(rate, from, to, amount){
+    
+        let fromAmount, toAmount;
+        const array = Object.entries(rate)
+
+        array.forEach(key => {
+            var name = key[0];
+            var price = key[1];
 
             if(name === from)
                 fromAmount = price;
-
+        
             else if(name === to)
                 toAmount = price;
         })
-        
-        return (amount/fromAmount)*toAmount;
 
-
-    }else{
-        console.log('Unable to fetch data')
-    }
+    return ((amount/fromAmount)*toAmount);
 }
-
 
 function Watch(){
     const [countryCode, setCountryCode] = useState({});
@@ -35,23 +32,34 @@ function Watch(){
     const [amount, setAmount] = useState(0);
     const [convertAmount, setConvertAmount] = useState(0);
     const [search, setSearch] = useState(false);
-       
+    const [rate, setRate] = useState({});       
 
     useEffect(() => {
         fetch(`http://data.fixer.io/api/${endpoint[1]}?access_key=${key}&format=1`).then(res => res.json()).then(data => setCountryCode(data.symbols))
+        fetch(`http://data.fixer.io/api/${endpoint[0]}?access_key=${key}&format=1`).then(res => res.json()).then(data => {
+            if(data.success)
+                setRate(data.rates)
+            else{
+                console.log('Unable to connect to network')
+                setConvertAmount('Unable to connect')
+            }
+        })
         setSearch(true)
     }, [search])
 
 
-    const handleSubmit = (event) => {
-        fetch(`http://data.fixer.io/api/${endpoint[0]}?access_key=${key}&format=1`).then(res => res.json()).then(data => {
-            setConvertAmount(calculation(data, from, to, amount))
-        })
-
+    function handleSubmit(event){
+        
+        setConvertAmount(calculation(rate, from, to, amount));
+        
         event.preventDefault();
     }
 
     return(
+        <div>
+            <div className="welcomeNote">
+                <h1>Hello there, Wellcome to currency exchanger</h1>
+            </div>
         <div className="converterContainer">
             <form onSubmit={handleSubmit}>            
                 <label>From: </label>
@@ -71,16 +79,28 @@ function Watch(){
                 <input type="number" value={amount} onChange={e => setAmount(e.target.value)}/>
                 <br />
 
-                
-                <input type="submit" />
-                
+                <div className="submitButton">
+                    <input type="submit" />
+                </div>
+                                
             </form>
 
-            Converted Amount: {convertAmount}
+            <div className="converted">
+                Converted Amount: {convertAmount}
+            </div>
+            
+        </div>
+            <div>
+                <CountryCode country={countryCode}  rate={rate}/>
+            </div>
+
+            <div className="footer">
+                made by <a href="https://www.instagram.com/aryaksinghchauhan/">Aryak singh chauhan</a>
+            </div>
         </div>
     )
 }
 
-export default Watch
+export default Watch;
 
 // http://data.fixer.io/api/latest?access_key=5d81add0a471e102de1f7222c75929dc&format=1

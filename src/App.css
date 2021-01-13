@@ -1,14 +1,111 @@
 *{
     padding: 0;
     margin: 0;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(163,175,243,0.3) 0%, rgba(220,182,232,0.3) 100.2% );
+    /* opacity: 0.5; */
 }
 
 .Container{
     height: 100%;
     width: 100%;
+}
+
+.welcomeNote{
+    width: fit-content;
+    margin: 0 auto;
+    font-size: x-large;
+    font-weight: 100;
+}
+
+ul{
+    margin-top: 20px;
+    list-style: none;
+    padding: 5px;    
+}
+
+select, input{
+    margin: 5px;
+    height: 30px;
+    font-size: 18px;
+    outline: none;
+    border: 0.5px solid rgb(241, 89, 42);
+    border-radius: 0 10px;
+}
+
+select{
+    width: 100%;
+    font-size: 14px;
+}
+
+form{
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.submitButton{
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.submitButton input{
+    font-size: 18px;
+    background-color: #74EBD5;
+    background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+    outline: none;
+    border: 0;
+    padding: 5px;
+    border-radius: 5px;
+    opacity: 0.8;
+}
+
+.submitButton input:active{
+    background-color: #7ee8fa;
+    background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
+}
+
+.codeAndPrice{
+    padding: 10px;
+    margin: 5px;
+    width: 90%;
+    margin: 20px auto;
+}
+
+.card{
+    padding: 20px;
+    /* margin: 30px; */
+    /* border: 2px solid #fff000; */
+    border-radius: 5px;
+    width: 360px;
+    background-color: #b3cdd1;
+    background-image: linear-gradient(315deg, #b3cdd1 0%, #9fa4c4 74%);
+}
+
+.converterContainer{
+    padding: 10px;
+    margin: 20px auto;
+    width: fit-content;
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: #ff4e00;
+    background-image: linear-gradient(315deg, #ff4d0036 0%, #ec9f053f 74%);
+}
+
+.converted{
+    background-image: linear-gradient( 135deg, #8ee68e 10%, #68ca4d 100%);
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.codeAndPrice{
     display: flex;
-    /* text-align: center; */
-    /* justify-self: center; */
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    /* border: 1px solid red; */
+    flex-wrap: wrap;
+}
+
+.footer{
+    width: fit-content;
+    margin: 0 auto;
 }
